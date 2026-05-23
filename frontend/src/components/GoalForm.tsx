@@ -52,8 +52,7 @@ export default function GoalForm({ onSubmit }: Props) {
           type="number"
           value={hours}
           onChange={(e) => setHours(e.target.value)}
-          min={0.1}
-          step={0.5}
+          min={0}
         />
         <span>hours</span>
       </div>
