@@ -1,0 +1,8 @@
+bin/
+obj/
+out/
+wwwroot/
+*.db
+node_modules/
+frontend/dist/
+.vs/
