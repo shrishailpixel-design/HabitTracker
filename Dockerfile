@@ -12,5 +12,6 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
 COPY --from=build /app/out .
+RUN mkdir -p /app/data
 EXPOSE 5000
 CMD ["./Project.Api"]
