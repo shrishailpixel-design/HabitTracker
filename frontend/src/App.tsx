@@ -51,9 +51,6 @@ export default function App() {
 
   return (
     <>
-      <div className="floating-orb a" />
-      <div className="floating-orb b" />
-      <div className="floating-orb c" />
       <div className="app">
         <header>
           <h1>Habit Tracker</h1>
