@@ -27,8 +27,8 @@ export default function App() {
     await load();
   };
 
-  const handleDelete = async (id: number) => {
-    await deleteGoal(id);
+  const handleDelete = async (id: number, password: string) => {
+    await deleteGoal(id, password);
     await load();
   };
 

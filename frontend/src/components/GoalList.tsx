@@ -1,9 +1,11 @@
+import { useState } from "react";
 import type { GoalResponse } from "../types";
 import GoalTimer from "./GoalTimer";
+import PasswordModal from "./PasswordModal";
 
 interface Props {
   goals: GoalResponse[];
-  onDelete: (id: number) => void;
+  onDelete: (id: number, password: string) => Promise<void>;
 }
 
 function getHabitIcon(title: string): string {
@@ -25,6 +27,8 @@ function getHabitIcon(title: string): string {
 }
 
 export default function GoalList({ goals, onDelete }: Props) {
+  const [deleteTarget, setDeleteTarget] = useState<GoalResponse | null>(null);
+
   if (goals.length === 0) {
     return (
       <div className="empty">
@@ -43,7 +47,7 @@ export default function GoalList({ goals, onDelete }: Props) {
               <div className="goal-badge">{getHabitIcon(goal.title)}</div>
               <h3>{goal.title}</h3>
             </div>
-            <button className="delete-btn" onClick={() => onDelete(goal.id)} title="Delete goal">
+            <button className="delete-btn" onClick={() => setDeleteTarget(goal)} title="Delete goal">
               ✕
             </button>
           </div>
@@ -55,6 +59,17 @@ export default function GoalList({ goals, onDelete }: Props) {
           />
         </div>
       ))}
+
+      {deleteTarget && (
+        <PasswordModal
+          title={deleteTarget.title}
+          onConfirm={async (password) => {
+            await onDelete(deleteTarget.id, password);
+            setDeleteTarget(null);
+          }}
+          onCancel={() => setDeleteTarget(null)}
+        />
+      )}
     </div>
   );
 }

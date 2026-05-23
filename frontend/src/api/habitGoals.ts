@@ -18,7 +18,12 @@ export async function createGoal(req: CreateGoalRequest): Promise<GoalResponse> 
   return res.json();
 }
 
-export async function deleteGoal(id: number): Promise<void> {
-  const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
+export async function deleteGoal(id: number, password: string): Promise<void> {
+  const res = await fetch(`${API_BASE}/${id}/delete`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password }),
+  });
+  if (res.status === 403) throw new Error("Incorrect password");
   if (!res.ok) throw new Error("Failed to delete goal");
 }

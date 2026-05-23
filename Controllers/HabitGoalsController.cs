@@ -10,8 +10,13 @@ namespace Project.Api.Controllers;
 public class HabitGoalsController : ControllerBase
 {
     private readonly AppDbContext _db;
+    private readonly IConfiguration _config;
 
-    public HabitGoalsController(AppDbContext db) => _db = db;
+    public HabitGoalsController(AppDbContext db, IConfiguration config)
+    {
+        _db = db;
+        _config = config;
+    }
 
     [HttpGet]
     public async Task<ActionResult<List<GoalResponse>>> GetAll()
@@ -50,9 +55,14 @@ public class HabitGoalsController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = goal.Id }, ToResponse(goal));
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    [HttpPost("{id}/delete")]
+    public async Task<IActionResult> Delete(int id, [FromBody] DeleteRequest request)
     {
+        var storedPassword = _config.GetValue<string>("DeletePassword") ?? "admin123";
+
+        if (request.Password != storedPassword)
+            return StatusCode(403, new { error = "Incorrect password" });
+
         var goal = await _db.HabitGoals.FindAsync(id);
         if (goal is null) return NotFound();
 
@@ -85,6 +95,8 @@ public class HabitGoalsController : ControllerBase
 }
 
 public record CreateGoalRequest(string Title, double GoalDurationHours);
+
+public record DeleteRequest(string Password);
 
 public class GoalResponse
 {
