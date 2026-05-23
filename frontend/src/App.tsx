@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import GoalForm from "./components/GoalForm";
 import GoalList from "./components/GoalList";
+import Quote from "./components/Quote";
 import { getGoals, createGoal, deleteGoal } from "./api/habitGoals";
 import type { CreateGoalRequest, GoalResponse } from "./types";
 
@@ -42,6 +43,7 @@ export default function App() {
           <h1>Habit Tracker</h1>
           <p>Quit a habit. Track your progress.</p>
         </header>
+        <Quote />
         <main>
           <GoalForm onSubmit={handleCreate} />
           <GoalList goals={goals} onDelete={handleDelete} />
