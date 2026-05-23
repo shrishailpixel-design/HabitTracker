@@ -2,35 +2,51 @@ import { useEffect, useState } from "react";
 import GoalForm from "./components/GoalForm";
 import GoalList from "./components/GoalList";
 import Quote from "./components/Quote";
+import GamificationPanel from "./components/GamificationPanel";
+import PetDisplay from "./components/PetDisplay";
+import DailyQuests from "./components/DailyQuests";
+import WeeklyBoss from "./components/WeeklyBoss";
 import { getGoals, createGoal, deleteGoal } from "./api/habitGoals";
-import type { CreateGoalRequest, GoalResponse } from "./types";
+import { getProfile, completeGoal } from "./api/gamification";
+import type { CreateGoalRequest, GoalResponse, ProfileResponse } from "./types";
 
 export default function App() {
   const [goals, setGoals] = useState<GoalResponse[]>([]);
+  const [profile, setProfile] = useState<ProfileResponse | null>(null);
 
-  const load = async () => {
+  const loadGoals = async () => {
     try {
-      const data = await getGoals();
-      setGoals(data);
+      setGoals(await getGoals());
     } catch {
       console.error("Failed to load goals");
     }
   };
 
+  const loadProfile = async () => {
+    try {
+      setProfile(await getProfile());
+    } catch {
+      console.error("Failed to load profile");
+    }
+  };
+
   useEffect(() => {
-    load();
-    const id = setInterval(load, 30000);
+    loadGoals();
+    loadProfile();
+    const id = setInterval(loadGoals, 30000);
     return () => clearInterval(id);
   }, []);
 
   const handleCreate = async (req: CreateGoalRequest) => {
     await createGoal(req);
-    await load();
+    await completeGoal();
+    await loadGoals();
+    await loadProfile();
   };
 
   const handleDelete = async (id: number, password: string) => {
     await deleteGoal(id, password);
-    await load();
+    await loadGoals();
   };
 
   return (
@@ -44,8 +60,24 @@ export default function App() {
           <p>Quit a habit. Track your progress.</p>
         </header>
         <Quote />
+
+        {profile && (
+          <div className="game-row">
+            <PetDisplay profile={profile} onUpdate={loadProfile} />
+            <GamificationPanel profile={profile} />
+          </div>
+        )}
+
         <main>
           <GoalForm onSubmit={handleCreate} />
+
+          {profile && (
+            <div className="game-sidebar">
+              <DailyQuests onXpGained={loadProfile} />
+              <WeeklyBoss onXpGained={loadProfile} />
+            </div>
+          )}
+
           <GoalList goals={goals} onDelete={handleDelete} />
         </main>
       </div>

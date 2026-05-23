@@ -699,6 +699,281 @@ header p {
   box-shadow: none;
 }
 
+/* ─── Gamification ─── */
+.game-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.pet-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.25s;
+  min-width: 100px;
+}
+
+.pet-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.pet-emoji {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.pet-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.pet-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.pet-level {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.xp-bar-wrap {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.xp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.level {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.xp-text {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.xp-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.xp-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: var(--accent);
+  cursor: default;
+}
+
+.game-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.game-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.section-title {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quest {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.quest.done {
+  opacity: 0.5;
+}
+
+.quest-desc {
+  flex: 1;
+  color: var(--text);
+}
+
+.quest-xp {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.quest-btn {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.quest-btn:hover {
+  background: var(--accent-hover);
+}
+
+.quest-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quest-check {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.boss-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.boss-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.boss-icon {
+  font-size: 28px;
+}
+
+.boss-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.boss-hp-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.boss-hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--danger), #ff6b6b);
+  border-radius: 8px;
+  transition: width 0.3s;
+}
+
+.boss-hp-text {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+
+.boss-btn {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, var(--danger), #ff6b6b);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.boss-btn:hover {
+  box-shadow: 0 4px 16px var(--danger-glow);
+  transform: translateY(-1px);
+}
+
+.boss-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.boss-defeated {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.boss-msg {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 480px) {
   .app { padding: 24px 12px; }

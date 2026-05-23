@@ -6,6 +6,9 @@ namespace Project.Api.Data;
 public class AppDbContext : DbContext
 {
     public DbSet<HabitGoal> HabitGoals => Set<HabitGoal>();
+    public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
+    public DbSet<DailyQuest> DailyQuests => Set<DailyQuest>();
+    public DbSet<WeeklyBoss> WeeklyBosses => Set<WeeklyBoss>();
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
