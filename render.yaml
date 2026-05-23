@@ -1,16 +1,8 @@
 services:
   - type: web
     name: habit-tracker
-    runtime: dotnet
-    buildCommand: |
-      cd frontend
-      npm install
-      npm run build
-      cd ..
-      mkdir -p wwwroot
-      cp -r frontend/dist/* wwwroot/
-      dotnet publish -c Release -o out
-    startCommand: ./out/Project.Api
+    runtime: docker
+    dockerfilePath: Dockerfile
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
