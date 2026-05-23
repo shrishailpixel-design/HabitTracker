@@ -41,11 +41,11 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('https://images.alphacoders.com/467/467394.jpg');
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/46/Kobe_B_Bryant.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  filter: brightness(0.35) saturate(0.9);
+  filter: brightness(0.3) saturate(0.9);
   pointer-events: none;
   z-index: 0;
 }
