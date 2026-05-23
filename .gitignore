@@ -3,6 +3,8 @@ obj/
 out/
 wwwroot/
 *.db
+*.db-shm
+*.db-wal
 node_modules/
 frontend/dist/
 .vs/
