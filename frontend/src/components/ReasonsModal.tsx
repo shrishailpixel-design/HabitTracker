@@ -14,6 +14,7 @@ export default function ReasonsModal({ onClose }: Props) {
     }
   });
   const [input, setInput] = useState("");
+  const [alertReason, setAlertReason] = useState<string | null>(null);
 
   const save = (updated: string[]) => {
     setReasons(updated);
@@ -33,59 +34,73 @@ export default function ReasonsModal({ onClose }: Props) {
 
   const alertRandom = () => {
     if (reasons.length === 0) {
-      alert("Add some reasons first — why did you start?");
+      setAlertReason("Add some reasons first — why did you start?");
       return;
     }
     const r = reasons[Math.floor(Math.random() * reasons.length)];
-    alert(r);
+    setAlertReason(r);
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal reasons-modal" onClick={(e) => e.stopPropagation()}>
-        <h3>Why I Quit</h3>
-        <p>Reasons to remember when you feel like giving in.</p>
+    <>
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal reasons-modal" onClick={(e) => e.stopPropagation()}>
+          <h3>Why I Quit</h3>
+          <p>Reasons to remember when you feel like giving in.</p>
 
-        <button className="alert-btn" onClick={alertRandom}>
-          ⚠️ Alert me
-        </button>
-
-        <div className="reasons-list">
-          {reasons.length === 0 && (
-            <p className="reasons-empty">No reasons yet. Add one below.</p>
-          )}
-          {reasons.map((reason, i) => (
-            <div key={i} className="reason-item">
-              <span>{reason}</span>
-              <button
-                className="reason-remove"
-                onClick={() => removeReason(i)}
-                title="Remove"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <div className="reasons-add">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && addReason()}
-            placeholder="Add a reason..."
-          />
-          <button onClick={addReason} disabled={!input.trim()}>
-            Add
+          <button className="alert-btn" onClick={alertRandom}>
+            ⚠️ Alert me
           </button>
-        </div>
 
-        <div className="modal-actions">
-          <button className="btn-cancel" onClick={onClose}>
-            Close
-          </button>
+          <div className="reasons-list">
+            {reasons.length === 0 && (
+              <p className="reasons-empty">No reasons yet. Add one below.</p>
+            )}
+            {reasons.map((reason, i) => (
+              <div key={i} className="reason-item">
+                <span>{reason}</span>
+                <button
+                  className="reason-remove"
+                  onClick={() => removeReason(i)}
+                  title="Remove"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="reasons-add">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && addReason()}
+              placeholder="Add a reason..."
+            />
+            <button onClick={addReason} disabled={!input.trim()}>
+              Add
+            </button>
+          </div>
+
+          <div className="modal-actions">
+            <button className="btn-cancel" onClick={onClose}>
+              Close
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+
+      {alertReason && (
+        <div className="modal-overlay alert-overlay" onClick={() => setAlertReason(null)}>
+          <div className="alert-card" onClick={(e) => e.stopPropagation()}>
+            <div className="alert-card-icon">💪</div>
+            <p className="alert-card-text">{alertReason}</p>
+            <button className="alert-card-btn" onClick={() => setAlertReason(null)}>
+              I got this
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

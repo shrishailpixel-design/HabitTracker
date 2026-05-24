@@ -1279,6 +1279,57 @@ header p {
   box-shadow: none;
 }
 
+/* ─── Alert Card ─── */
+.alert-overlay {
+  z-index: 200;
+}
+
+.alert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 32px 28px;
+  width: 380px;
+  max-width: 88vw;
+  text-align: center;
+  animation: cardIn 0.35s ease-out;
+  backdrop-filter: blur(20px);
+}
+
+.alert-card-icon {
+  font-size: 52px;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.alert-card-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-heading);
+  line-height: 1.5;
+  margin: 0 0 28px;
+  letter-spacing: -0.2px;
+}
+
+.alert-card-btn {
+  padding: 12px 36px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.3px;
+}
+
+.alert-card-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 480px) {
   .app { padding: 24px 12px; }
