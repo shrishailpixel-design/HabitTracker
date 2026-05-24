@@ -5,13 +5,14 @@
   --surface: rgba(255, 255, 255, 0.04);
   --surface-hover: rgba(255, 255, 255, 0.08);
   --border: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(99, 102, 241, 0.5);
+  --border-focus: rgba(34, 197, 94, 0.5);
   --text: #a1a1aa;
   --text-heading: #fafafa;
   --text-muted: #71717a;
-  --accent: #6366f1;
-  --accent-glow: rgba(99, 102, 241, 0.25);
-  --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --accent: #22c55e;
+  --accent-hover: #16a34a;
+  --accent-glow: rgba(34, 197, 94, 0.25);
+  --accent-gradient: linear-gradient(135deg, #22c55e, #16a34a);
   --danger: #ef4444;
   --danger-glow: rgba(239, 68, 68, 0.2);
   --success: #22c55e;
@@ -93,7 +94,7 @@ header::after {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(10,10,15,0.3) 0%, rgba(99,102,241,0.15) 50%, rgba(10,10,15,0.8) 100%);
+  background: linear-gradient(180deg, rgba(10,10,15,0.3) 0%, rgba(34,197,94,0.15) 50%, rgba(10,10,15,0.8) 100%);
 }
 
 header h1 {
