@@ -111,7 +111,7 @@ header h1 {
 header p {
   margin: 0;
   font-size: 14px;
-  color: var(--text-muted);
+  color: #fff;
   font-weight: 400;
 }
 
