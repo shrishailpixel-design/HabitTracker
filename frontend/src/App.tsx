@@ -7,6 +7,7 @@ import PetDisplay from "./components/PetDisplay";
 import DailyQuests from "./components/DailyQuests";
 import WeeklyBoss from "./components/WeeklyBoss";
 import ReasonsModal from "./components/ReasonsModal";
+import StatsPanel from "./components/StatsPanel";
 import { getGoals, createGoal, deleteGoal } from "./api/habitGoals";
 import { getProfile, completeGoal } from "./api/gamification";
 import type { CreateGoalRequest, GoalResponse, ProfileResponse } from "./types";
@@ -65,6 +66,8 @@ export default function App() {
         </button>
 
         {showReasons && <ReasonsModal onClose={() => setShowReasons(false)} />}
+
+        <StatsPanel goals={goals} />
 
         {profile && (
           <div className="game-row">
