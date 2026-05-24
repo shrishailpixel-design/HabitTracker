@@ -194,8 +194,8 @@ header p {
 }
 
 .duration-input input {
-  width: 88px;
-  padding: 10px 12px;
+  width: 72px;
+  padding: 10px 8px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--bg);

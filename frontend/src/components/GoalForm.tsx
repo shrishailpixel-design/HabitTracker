@@ -19,15 +19,20 @@ const habits = [
 
 export default function GoalForm({ onSubmit }: Props) {
   const [title, setTitle] = useState("");
+  const [days, setDays] = useState("");
   const [hours, setHours] = useState("24");
   const [loading, setLoading] = useState(false);
 
+  const totalHours = Number(days) * 24 + Number(hours);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) return;
+    if (!title.trim() || totalHours <= 0) return;
     setLoading(true);
-    await onSubmit({ title: title.trim(), goalDurationHours: Number(hours) });
+    await onSubmit({ title: title.trim(), goalDurationHours: totalHours });
     setTitle("");
+    setDays("");
+    setHours("24");
     setLoading(false);
   };
 
@@ -50,13 +55,21 @@ export default function GoalForm({ onSubmit }: Props) {
         <label>Goal duration</label>
         <input
           type="number"
+          value={days}
+          onChange={(e) => setDays(e.target.value)}
+          min={0}
+          placeholder="0"
+        />
+        <span>days</span>
+        <input
+          type="number"
           value={hours}
           onChange={(e) => setHours(e.target.value)}
           min={0}
         />
         <span>hours</span>
       </div>
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading || totalHours <= 0}>
         {loading ? "Starting..." : "Start New Goal"}
       </button>
     </form>
