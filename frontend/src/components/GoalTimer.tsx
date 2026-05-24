@@ -1,5 +1,18 @@
 import { useEffect, useState } from "react";
 
+function parseTimeSpan(ts: string): number {
+  const parts = ts.split(":");
+  if (parts.length === 3) {
+    const [h, m, s] = parts.map(Number);
+    return h * 3600 + m * 60 + s;
+  }
+  if (parts.length === 4) {
+    const [d, h, m, s] = parts.map(Number);
+    return d * 86400 + h * 3600 + m * 60 + s;
+  }
+  return 0;
+}
+
 function formatTime(totalSeconds: number): string {
   const d = Math.floor(totalSeconds / 86400);
   const h = Math.floor((totalSeconds % 86400) / 3600);
@@ -11,24 +24,31 @@ function formatTime(totalSeconds: number): string {
 }
 
 interface Props {
-  startTime: string;
+  elapsed: string;
+  remaining: string;
   isCompleted: boolean;
   goalDurationHours: number;
 }
 
-export default function GoalTimer({ startTime, isCompleted, goalDurationHours }: Props) {
-  const [now, setNow] = useState(Date.now());
+export default function GoalTimer({ elapsed, remaining, isCompleted, goalDurationHours }: Props) {
+  const [elapsedSec, setElapsedSec] = useState(() => parseTimeSpan(elapsed));
+  const [remainingSec, setRemainingSec] = useState(() => parseTimeSpan(remaining));
+
+  useEffect(() => {
+    setElapsedSec(parseTimeSpan(elapsed));
+    setRemainingSec(parseTimeSpan(remaining));
+  }, [elapsed, remaining]);
 
   useEffect(() => {
     if (isCompleted) return;
-    const id = setInterval(() => setNow(Date.now()), 1000);
+    const id = setInterval(() => {
+      setElapsedSec((s) => s + 1);
+      setRemainingSec((s) => Math.max(s - 1, 0));
+    }, 1000);
     return () => clearInterval(id);
   }, [isCompleted]);
 
-  const elapsedSec = Math.floor((now - new Date(startTime).getTime()) / 1000);
-
   const totalSec = goalDurationHours * 3600;
-  const remainingSec = Math.max(totalSec - elapsedSec, 0);
   const progress = Math.min(elapsedSec / totalSec, 1);
   const nearComplete = remainingSec > 0 && remainingSec <= 300;
 

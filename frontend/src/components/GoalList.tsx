@@ -52,7 +52,8 @@ export default function GoalList({ goals, onDelete }: Props) {
             </button>
           </div>
           <GoalTimer
-            startTime={goal.startTime}
+            elapsed={goal.elapsed}
+            remaining={goal.remaining}
             isCompleted={goal.isCompleted}
             goalDurationHours={goal.goalDurationHours}
           />
