@@ -74,6 +74,7 @@ header {
   position: relative;
   padding: 48px 24px;
   border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
   isolation: isolate;
 }
