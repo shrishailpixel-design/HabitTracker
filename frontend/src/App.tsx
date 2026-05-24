@@ -6,6 +6,7 @@ import GamificationPanel from "./components/GamificationPanel";
 import PetDisplay from "./components/PetDisplay";
 import DailyQuests from "./components/DailyQuests";
 import WeeklyBoss from "./components/WeeklyBoss";
+import ReasonsModal from "./components/ReasonsModal";
 import { getGoals, createGoal, deleteGoal } from "./api/habitGoals";
 import { getProfile, completeGoal } from "./api/gamification";
 import type { CreateGoalRequest, GoalResponse, ProfileResponse } from "./types";
@@ -13,6 +14,7 @@ import type { CreateGoalRequest, GoalResponse, ProfileResponse } from "./types";
 export default function App() {
   const [goals, setGoals] = useState<GoalResponse[]>([]);
   const [profile, setProfile] = useState<ProfileResponse | null>(null);
+  const [showReasons, setShowReasons] = useState(false);
 
   const loadGoals = async () => {
     try {
@@ -57,6 +59,12 @@ export default function App() {
           <p>Quit a habit. Track your progress.</p>
         </header>
         <Quote />
+
+        <button className="reasons-toggle" onClick={() => setShowReasons(true)}>
+          ⚠️ Why I Quit
+        </button>
+
+        {showReasons && <ReasonsModal onClose={() => setShowReasons(false)} />}
 
         {profile && (
           <div className="game-row">
