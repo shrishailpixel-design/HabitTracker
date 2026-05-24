@@ -98,18 +98,39 @@ export default function StatsPanel({ goals }: Props) {
   );
 }
 
+interface UrgeEntry {
+  time: string;
+  trigger: string;
+}
+
+function parseUrges(data: string): UrgeEntry[] {
+  try {
+    const parsed = JSON.parse(data);
+    return parsed.map((e: unknown) => {
+      if (typeof e === "string") return { time: e, trigger: "" };
+      if (typeof e === "object" && e !== null) return e as UrgeEntry;
+      return { time: String(e), trigger: "" };
+    });
+  } catch {
+    return [];
+  }
+}
+
 function UrgeHistory({ onClose, onLog }: { onClose: () => void; onLog: () => void }) {
-  const [urges, setUrges] = useState<string[]>(() => {
-    try { return JSON.parse(localStorage.getItem("urge-log") || "[]"); }
-    catch { return []; }
+  const [urges, setUrges] = useState<UrgeEntry[]>(() => {
+    return parseUrges(localStorage.getItem("urge-log") || "[]");
   });
+  const [triggerInput, setTriggerInput] = useState("");
 
   const logUrge = () => {
-    const now = new Date();
-    const entry = now.toLocaleString();
+    const entry: UrgeEntry = {
+      time: new Date().toLocaleString(),
+      trigger: triggerInput.trim(),
+    };
     const updated = [entry, ...urges];
     setUrges(updated);
     localStorage.setItem("urge-log", JSON.stringify(updated));
+    setTriggerInput("");
     onLog();
   };
 
@@ -118,6 +139,15 @@ function UrgeHistory({ onClose, onLog }: { onClose: () => void; onLog: () => voi
       <div className="modal urge-modal" onClick={(e) => e.stopPropagation()}>
         <h3>Urge Log</h3>
         <p>Every time you feel an urge, log it. Awareness beats addiction.</p>
+
+        <input
+          className="urge-input"
+          value={triggerInput}
+          onChange={(e) => setTriggerInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && logUrge()}
+          placeholder="What triggered it?"
+          autoFocus
+        />
 
         <button className="urge-log-btn" onClick={logUrge}>
           🤯 Log an urge
@@ -130,7 +160,10 @@ function UrgeHistory({ onClose, onLog }: { onClose: () => void; onLog: () => voi
           {urges.map((entry, i) => (
             <div key={i} className="urge-entry">
               <span className="urge-icon">⚠️</span>
-              <span>{entry}</span>
+              <div className="urge-entry-body">
+                {entry.trigger && <span className="urge-trigger">{entry.trigger}</span>}
+                <span className="urge-time">{entry.time}</span>
+              </div>
             </div>
           ))}
         </div>
